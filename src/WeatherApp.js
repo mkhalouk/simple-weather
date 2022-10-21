@@ -23,13 +23,26 @@ class WeatherApp extends React.Component {
   }
 
   async getLatLonFromCity(city) {
-    const res = await fetch("http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit="+this.state.limit+"&appid="+this.state.api_key).json();
-    return res;
+    return await fetch("http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid="+this.state.api_key)
+    .then((response) => response.json());
   }
 
-  currentWeather(lon, lat) {
-    fetch("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid="+this.state.api_key)
-    .then((response) => response.json())
+  async currentWeather() {
+    const city = document.getElementById('city').value;
+    const coord = await this.getLatLonFromCity(city);
+
+    const data = await fetch("https://api.openweathermap.org/data/2.5/weather?lat="+coord[0].lat+"&lon="+coord[0].lon+"&appid="+this.state.api_key)
+    .then((response) => response.json());
+
+    /**
+     * @param object data
+     * in order to access to the weather infos uneed to typically use data.main
+     * (which contains temperature, pressure, humidity etc..). Uncomment the
+     * the following line to show all details
+     */
+    // console.log(data);
+
+    return data;
   }
 
   componentDidMount() {
