@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url('../public/images/pexels-pixabay-531756.jpg');
+  background-image: url('../public/images/backgrounds/sunny.jpg');
   background-size: 100%;
   background-repeat: no-repeat;
 }
@@ -38,8 +38,6 @@
 
 .cityname{
   width: 35%;
-  height: 4vh !important;
-  border: none;
   border-radius: 15px;
   outline: none;
 }
