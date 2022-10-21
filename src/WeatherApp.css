@@ -106,3 +106,17 @@
   cursor: pointer;
   background-color: rgb(41, 41, 41);
 }
+
+.resultname {
+  margin-top: 5%;
+  margin-left: 12%;
+  font-size: 50px;
+  color: #FFF;
+}
+
+.resulttemp {
+  margin-left: 5%;
+  margin-top: -1%;
+  font-size: 100px;
+  color: #FFF;
+}

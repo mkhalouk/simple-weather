@@ -1,6 +1,7 @@
 import './WeatherApp.css';
 import React from 'react';
 import SearchBox from './components/searchBox';
+import WeatherCard from './components/WeatherCard';
 
 class WeatherApp extends React.Component {
 
@@ -13,6 +14,8 @@ class WeatherApp extends React.Component {
       latitude : 0,
       limit : 5,
       showsearchCard : false,
+      showresultCard : false,
+      result : null
     }
     this.getLatLonFromCity = this.getLatLonFromCity.bind(this);
     this.currentWeather = this.currentWeather.bind(this);
@@ -40,9 +43,9 @@ class WeatherApp extends React.Component {
      * (which contains temperature, pressure, humidity etc..). Uncomment the
      * the following line to show all details
      */
-    // console.log(data);
+     this.setState({result : data, showresultCard : true, showsearchCard  : false});
 
-    return data;
+    //return data;
   }
 
   componentDidMount() {
@@ -64,7 +67,8 @@ class WeatherApp extends React.Component {
           <div className='main-searchbox'>
           <button className='search-btn-this'>Your city</button>
           <button className='search-btn-another' onClick={this.setSearchCardStatus}>Some city</button>
-          {this.state.showsearchCard === true ? <SearchBox/> : <div></div>}
+          {this.state.showsearchCard === true ? <SearchBox currentWeather={this.currentWeather} /> : <div></div>}
+          {this.state.showresultCard === true ? <WeatherCard result={this.state.result} /> : <div></div>}
           </div>
         </div>
       </div>
