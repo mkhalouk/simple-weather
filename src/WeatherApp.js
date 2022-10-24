@@ -19,6 +19,7 @@ class WeatherApp extends React.Component {
     }
     this.getLatLonFromCity = this.getLatLonFromCity.bind(this);
     this.currentWeather = this.currentWeather.bind(this);
+    this.forecastDays = this.forecastDays.bind(this);
     this.setSearchCardStatus = this.setSearchCardStatus.bind(this);
     /*this.setState(() => {
       limit : 5
@@ -26,26 +27,29 @@ class WeatherApp extends React.Component {
   }
 
   async getLatLonFromCity(city) {
-    return await fetch("http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid="+this.state.api_key)
-    .then((response) => response.json());
+    return (await fetch("http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid="+this.state.api_key)
+    .then((response) => response.json()))[0];
+  }
+
+  // FIXME: This api call is not included in the free subscription
+  async forecastDays() {
+    const city = document.getElementById('city').value;
+    const coord = (await this.getLatLonFromCity(city));
+
+    const data = await fetch("api.openweathermap.org/data/2.5/forecast/daily?lat="+coord.lat+"&lon="+coord.lon+"&cnt=5&appid="+this.state.api_key)
+    .then((response) => response);
+
+    this.setState({result : data, showresultCard : true, showsearchCard  : false});
   }
 
   async currentWeather() {
     const city = document.getElementById('city').value;
     const coord = await this.getLatLonFromCity(city);
 
-    const data = await fetch("https://api.openweathermap.org/data/2.5/weather?lat="+coord[0].lat+"&lon="+coord[0].lon+"&appid="+this.state.api_key)
+    const data = await fetch("https://api.openweathermap.org/data/2.5/weather?lat="+coord.lat+"&lon="+coord.lon+"&appid="+this.state.api_key)
     .then((response) => response.json());
-
-    /**
-     * @param object data
-     * in order to access to the weather infos uneed to typically use data.main
-     * (which contains temperature, pressure, humidity etc..). Uncomment the
-     * the following line to show all details
-     */
-     this.setState({result : data, showresultCard : true, showsearchCard  : false});
-
-    //return data;
+    
+    this.setState({result : data, showresultCard : true, showsearchCard  : false});
   }
 
   componentDidMount() {
@@ -65,8 +69,8 @@ class WeatherApp extends React.Component {
         <div className='search-container'>
           <h2 className='title'>Weather forecast</h2>
           <div className='main-searchbox'>
-          <button className='search-btn-this'>Your city</button>
-          <button className='search-btn-another' onClick={this.setSearchCardStatus}>Some city</button>
+          <button className='search-btn-this'>Your location</button>
+          <button className='search-btn-another' onClick={this.setSearchCardStatus}>Type a location</button>
           {this.state.showsearchCard === true ? <SearchBox currentWeather={this.currentWeather} /> : <div></div>}
           {this.state.showresultCard === true ? <WeatherCard result={this.state.result} /> : <div></div>}
           </div>
