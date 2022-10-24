@@ -52,11 +52,16 @@ class WeatherApp extends React.Component {
     this.setState({result : data, showresultCard : true, showsearchCard  : false});
   }
 
+  // getCurrentLocation() {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition();
+  //   } else {
+  //     alert("Geolocation is not supported by this browser.");
+  //   }
+  // }
+
+
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition((succes) => {
-      //succes.coords.latitude;
-      //succes.coords.longitude;
-    });
   }
 
   setSearchCardStatus(){
@@ -69,7 +74,7 @@ class WeatherApp extends React.Component {
         <div className='search-container'>
           <h2 className='title'>Weather forecast</h2>
           <div className='main-searchbox'>
-          <button className='search-btn-this'>Your location</button>
+          <button className='search-btn-this' onClick={this.setSearchCardStatus}>Your location</button>
           <button className='search-btn-another' onClick={this.setSearchCardStatus}>Type a location</button>
           {this.state.showsearchCard === true ? <SearchBox currentWeather={this.currentWeather} /> : <div></div>}
           {this.state.showresultCard === true ? <WeatherCard result={this.state.result} /> : <div></div>}
