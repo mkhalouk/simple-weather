@@ -3,6 +3,7 @@ import React from 'react';
 const WeatherCard =  (props) =>  {
 
     //props.result.title
+    // remove dirty console.log
     console.log(props.result)
 
     return (
