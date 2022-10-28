@@ -35,10 +35,10 @@ class WeatherApp extends React.Component {
   async forecastDays() {
     const city = document.getElementById('city').value;
     const coord = (await this.getLatLonFromCity(city));
-
+// you should externalise this into seperated method (service)
+    // missing catch error
     const data = await fetch("api.openweathermap.org/data/2.5/forecast/daily?lat="+coord.lat+"&lon="+coord.lon+"&cnt=5&appid="+this.state.api_key)
     .then((response) => response);
-
     this.setState({result : data, showresultCard : true, showsearchCard  : false});
   }
 
@@ -60,7 +60,7 @@ class WeatherApp extends React.Component {
   //   }
   // }
 
-
+// useless lifecycle event 
   componentDidMount() {
   }
 
