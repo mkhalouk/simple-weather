@@ -2,9 +2,9 @@ import React from 'react';
 
 const WeatherCard =  (props) =>  {
 
-    //props.result.title
-    console.log(props.result)
-
+    /*TODO
+    Pre compute the value inside utils before rendering result
+    */
     return (
         <div className='result-box'>
         <h2 className='resultname'>{props.result.name}</h2>

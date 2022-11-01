@@ -3,7 +3,9 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-
+/*TODO
+Refactor all this code into functions and have 3 main functions as posssible outcomes : Rainy - Cloudy - Clear(Sunny)
+*/
 // Debug
 const gui = new dat.GUI()
 
@@ -16,7 +18,7 @@ const scene = new THREE.Scene()
 const gtlfLoader = new GLTFLoader()
 
 gtlfLoader.load(
-    "SideCloud_exp.glb", (gtlf) => {
+    "3d_models/SideCloud_exp.glb", (gtlf) => {
         gtlf.scene.scale.set(0.3, 0.3, 0.3)
         gtlf.scene.position.set(0, 1, -1)
         gtlf.scene.rotation.set(-3, .5, 0)
@@ -26,7 +28,7 @@ gtlfLoader.load(
 )
 
 gtlfLoader.load(
-    "SideCloud_exp.glb", (gtlf) => {
+    "3d_models/SideCloud_exp.glb", (gtlf) => {
         gtlf.scene.scale.set(0.3, 0.3, 0.3)
         gtlf.scene.position.set(3, 1, .5)
         gtlf.scene.rotation.set(-3, .5, 0)
@@ -35,7 +37,7 @@ gtlfLoader.load(
 )
 
 gtlfLoader.load(
-    "SideCloud_exp.glb", (gtlf) => {
+    "3d_models/SideCloud_exp.glb", (gtlf) => {
         gtlf.scene.scale.set(0.2, 0.2, 0.2)
         gtlf.scene.position.set(5, 0, -1)
         gtlf.scene.rotation.set(-3, .5, 0)
@@ -44,7 +46,7 @@ gtlfLoader.load(
 )
 
 gtlfLoader.load(
-    "SideCloud_exp.glb", (gtlf) => {
+    "3d_models/SideCloud_exp.glb", (gtlf) => {
         gtlf.scene.scale.set(0.2, 0.2, 0.2)
         gtlf.scene.position.set(2, 1, -1)
         gtlf.scene.rotation.set(-3, .5, 0)
@@ -195,7 +197,6 @@ export default function tick()  {
     // Update objects
     meshes.forEach((mesh, index) =>  {
         mesh.position.y += -positionT
-        console.log(meshes.length)
         if(mesh.position.y < -1){
             meshes.splice(index, 1)
             scene.remove(mesh)

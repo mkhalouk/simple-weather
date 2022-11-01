@@ -5,7 +5,9 @@ import WeatherCard from './components/WeatherCard';
 
 class WeatherApp extends React.Component {
 
-
+  /*TODO
+  Add these static values into .env files or proprety files 
+  */
   constructor(props) {
     super(props);
     this.state = {
@@ -26,12 +28,21 @@ class WeatherApp extends React.Component {
     })*/
   }
 
+  /* TODO : 
+  Pass this function in utils and its api call in services.
+  The info to load which 3D model is inside : "response.weather[0].main"
+  Always handle exceptions
+  */ 
   async getLatLonFromCity(city) {
     return (await fetch("http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid="+this.state.api_key)
     .then((response) => response.json()))[0];
   }
 
   // FIXME: This api call is not included in the free subscription
+  /* TODO : 
+  Pass this function inside services and handle any unti conversion inside utils.
+  Always handle exceptions
+  */ 
   async forecastDays() {
     const city = document.getElementById('city').value;
     const coord = (await this.getLatLonFromCity(city));
@@ -42,6 +53,10 @@ class WeatherApp extends React.Component {
     this.setState({result : data, showresultCard : true, showsearchCard  : false});
   }
 
+  /* TODO : 
+  Same. Pass this function inside services and handle any unti conversion inside utils.
+  Always handle exceptions
+  */ 
   async currentWeather() {
     const city = document.getElementById('city').value;
     const coord = await this.getLatLonFromCity(city);
@@ -52,6 +67,10 @@ class WeatherApp extends React.Component {
     this.setState({result : data, showresultCard : true, showsearchCard  : false});
   }
 
+  /*TODO
+  Replace the 'Your location' Button with this ...
+  and have the else of this function automatically open up the searchBox component
+  */
   // getCurrentLocation() {
   //   if (navigator.geolocation) {
   //     navigator.geolocation.getCurrentPosition();
@@ -68,6 +87,11 @@ class WeatherApp extends React.Component {
     this.setState({ showsearchCard : !this.state.showsearchCard})
   }
 
+  /*TODO :
+  We pass all this code bellow inside pages forlder and call that component from here
+  -Possible name for that component : HomePage.js-
+  -Create a HomePage.css for that component and put it inside css folder
+  */
   render() {
     return (
         <div className='search-container'>
