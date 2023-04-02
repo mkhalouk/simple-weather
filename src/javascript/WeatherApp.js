@@ -2,6 +2,7 @@ import '../css/WeatherApp.css';
 import React from 'react';
 import SearchBox from './components/searchBox';
 import WeatherCard from './components/WeatherCard';
+import executeOnce from './threejs/script';
 
 class WeatherApp extends React.Component {
 
@@ -62,8 +63,11 @@ class WeatherApp extends React.Component {
     const coord = await this.getLatLonFromCity(city);
 
     const data = await fetch("https://api.openweathermap.org/data/2.5/weather?lat="+coord.lat+"&lon="+coord.lon+"&appid="+this.state.api_key)
-    .then((response) => response.json());
-    
+    .then((response) => {
+      return response.json()
+    });
+    executeOnce(data.weather[0].main)
+    document.getElementsByClassName("main-searchbox")[0].style.display = "none"
     this.setState({result : data, showresultCard : true, showsearchCard  : false});
   }
 
@@ -100,8 +104,9 @@ class WeatherApp extends React.Component {
           <button className='search-btn-this' onClick={this.setSearchCardStatus}>Your location</button>
           <button className='search-btn-another' onClick={this.setSearchCardStatus}>Type a location</button>
           {this.state.showsearchCard === true ? <SearchBox currentWeather={this.currentWeather} /> : <div></div>}
-          {this.state.showresultCard === true ? <WeatherCard result={this.state.result} /> : <div></div>}
           </div>
+          {this.state.showresultCard === true ? <WeatherCard result={this.state.result} /> : <div></div>}
+
         </div>
     )
   }

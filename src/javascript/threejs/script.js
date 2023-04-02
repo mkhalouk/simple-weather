@@ -150,7 +150,7 @@ window.addEventListener('resize', () => {
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, .1, 100)
 camera.position.x = 7.7
-camera.position.y = -1
+camera.position.y = -.3
 camera.position.z = 5
  gui.add(camera.position, 'x').min(-10).max(10)
 gui.add(camera.position, 'y').min(-10).max(10)
@@ -212,11 +212,11 @@ let handleRainyWeather = () => {
 }
 
 export default function executeOnce(weatherString) {
-    if (weatherString === "a")
+    if (weatherString.toUpperCase() === "CLEAR")
         handleSunnyWeather()
-    if (weatherString === "b")
+    if (weatherString.toUpperCase()=== "CLOUDS")
         handleCloudyWeather()
-    if (weatherString === "c")
+    if (weatherString.toUpperCase() === "RAIN")
         handleRainyWeather()
 
     return tick()
